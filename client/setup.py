@@ -28,7 +28,7 @@ import client.src.pages.mapa as mapa
 import client.src.pages.informacoes as info
 import client.src.pages.reservas as reservas
 import client.src.pages.developers as developers
-import client.src.pages.documentacao as documentacao
+# import client.src.pages.documentacao as documentacao
 import client.src.pages.previsaoVendas as previsaoVendas
 import client.src.pages.analisador_funcionario as analisar
 import client.src.pages.categoria_venda as categoria_grafico
