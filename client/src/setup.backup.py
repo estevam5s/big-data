@@ -1,3 +1,40 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #                               File Name: app.py                                #
 #                           Creation Date: 5 de maio, 2023                               #
 #                         Source Language: Python                                          #
@@ -6,19 +43,19 @@
 #         Streamlit app designed for visualizing U.S. real estate data and market trends   #
 ############################################################################################
 
-# import time
-# import json
-# import qrcode
-# import base64
-# import smtplib
+import time
+import json
+import qrcode
+import base64
+import smtplib
 import logging
 import pandas as pd
-# import altair as alt
+import altair as alt
 import streamlit as st
 import plotly.express as px
 
 from PIL import Image
-# from deta import Deta
+from deta import Deta
 # from email.mime.text import MIMEText
 from streamlit_lottie import st_lottie
 # from email.mime.multipart import MIMEMultipart
@@ -69,30 +106,30 @@ titlePlaceholder = st.empty()
 MAX_ATTEMPTS = 3  # número máximo de tentativas
 usernames = []
 passwords = []
-# DETA_KEY = "e0u31gqkqju_2Ps7fJD5a1kAKF2Rr4Y31ASSdvUUeX8Y"
-# # # deta = Deta(DETA_KEY)
-# # db_deta_bebidas = deta.Base("bebidas")
-# db = deta.Base("data")
-# # db_deta_previsao_demanda = deta.Base("previsao_demanda")
-# # db_deta_funcionarios = deta.Base("funcionario")
-# # db_deta_categoriavendas = deta.Base("categoriavendas")
-# # db_deta_estoque = deta.Base("estoque")
-# # db_deta_pratos = deta.Base("prato")
-# # db_deta_clientes = deta.Base("cliente")
-# # db_deta_reservas = deta.Base("reservasClientes")
+DETA_KEY = "e0u31gqkqju_2Ps7fJD5a1kAKF2Rr4Y31ASSdvUUeX8Y"
+deta = Deta(DETA_KEY)
+db_deta_bebidas = deta.Base("bebidas")
+db = deta.Base("data")
+db_deta_previsao_demanda = deta.Base("previsao_demanda")
+db_deta_funcionarios = deta.Base("funcionario")
+db_deta_categoriavendas = deta.Base("categoriavendas")
+db_deta_estoque = deta.Base("estoque")
+db_deta_pratos = deta.Base("prato")
+db_deta_clientes = deta.Base("cliente")
+db_deta_reservas = deta.Base("reservasClientes")
 
 
 def to_dataframe(db):
     items = db.fetch().items
     return pd.DataFrame(items)
 
-# # dataDetaBebidas = to_dataframe(db_deta_bebidas)
-# # dataDetaEstoque = to_dataframe(db_deta_estoque)
-# # dataDetaPratos = to_dataframe(db_deta_pratos)
-# # dataDetaClientes = to_dataframe(db_deta_clientes)
-# # dataDetaCategoriaVendas = to_dataframe(db_deta_categoriavendas)
-# # dataDetaReservas = to_dataframe(db_deta_reservas)
-# # dataDetaFuncionarios = to_dataframe(db_deta_funcionarios)
+dataDetaBebidas = to_dataframe(db_deta_bebidas)
+dataDetaEstoque = to_dataframe(db_deta_estoque)
+dataDetaPratos = to_dataframe(db_deta_pratos)
+dataDetaClientes = to_dataframe(db_deta_clientes)
+dataDetaCategoriaVendas = to_dataframe(db_deta_categoriavendas)
+dataDetaReservas = to_dataframe(db_deta_reservas)
+dataDetaFuncionarios = to_dataframe(db_deta_funcionarios)
 
 
 def authenticate_user(username, password):
@@ -101,7 +138,7 @@ def authenticate_user(username, password):
 
 def mainLogin():
   
-  # logging.info('O cliente escolheu fazer login')
+  logging.info('O cliente escolheu fazer login')
   if 'blocked_time' in st.session_state and st.session_state.blocked_time > time.time():
     st.warning(f"Sua conta foi bloqueada por excesso de tentativas. Tente novamente em {st.session_state.blocked_time - int(time.time())} segundos.")
   else:
@@ -117,17 +154,17 @@ def mainLogin():
                 data = f.read()
             return base64.b64encode(data).decode()
 
-        # logging.info('Iniciando o app')
+        logging.info('Iniciando o app')
         
         st.sidebar.image(logoImg , width=215)
-        # # logging.basicConfig(
-        # filename='client/src/log/app.log',
-        #   # level=logging.INFO,
-        #   format='%(asctime)s %(levelname)s %(name)s %(filename)s:%(lineno)d %(funcName)s() [%(process)d] - %(message)s'
-        # )
+        logging.basicConfig(
+          filename='client/src/log/app.log',
+          level=logging.INFO,
+          format='%(asctime)s %(levelname)s %(name)s %(filename)s:%(lineno)d %(funcName)s() [%(process)d] - %(message)s'
+        )
 
-        # session_start_time = st.session_state.get('session_start_time', time.time())
-        # elapsed_time = time.time() - session_start_time
+        session_start_time = st.session_state.get('session_start_time', time.time())
+        elapsed_time = time.time() - session_start_time
 
         selecionar = st.sidebar.selectbox("Selecione a página", [
                                                               "🏠 Home",
@@ -190,12 +227,12 @@ def mainLogin():
 
             st.markdown("###### Tudo o que você pode saber aqui sobre ✎Bebidas ✎Mercadorias ✎Preços ✎Pratos da casa ✎Clientes ✎Avaliações ✎Custo ✎Localização ✎E muito mais")
             st.markdown("Este projeto foi criado para gerenciar um restaurante chamado Pedacinho do Céu. O projeto utiliza Big Data, Power BI, Docker e uma API RESTful para coletar, processar, armazenar e visualizar os dados.")
-            # logging.info('O cliente selecionou a página Pedacinho do Céu')
+            logging.info('O cliente selecionou a página Pedacinho do Céu')
 
             pic = Image.open('client/src/public/food-camarao.png')
             st.image(pic, use_column_width=True)
 
-            # logging.info('O cliente selecionou a página Home')
+            logging.info('O cliente selecionou a página Home')
             col1, col2 = st.columns(2)
 
             with col1:
@@ -216,7 +253,7 @@ def mainLogin():
           elif arquivo00 == 'Vídeo':
           
             st.video("https://www.youtube.com/watch?v=wDJN95Y_yOM")
-            # logging.info('Video de fundo')
+            logging.info('Video de fundo')
           
           else:
 
@@ -239,7 +276,7 @@ def mainLogin():
                 st.write("https://github.com/big-data-estacio/data")
 
         if selecionar == "🎃 Sobre":
-          # logging.info('O cliente selecionou a página Sobre')
+          logging.info('O cliente selecionou a página Sobre')
           st.markdown("## Sobre o Restaurante")
           st.write("O Restaurante Pedacinho do Céu foi fundado em 1995 com o objetivo de proporcionar aos seus clientes uma experiência gastronômica única e inesquecível. Com um cardápio diversificado que inclui pratos da cozinha regional e internacional, o restaurante se destaca pela qualidade dos seus ingredientes e pelo atendimento personalizado.")
           st.write("Além da excelência na comida, o Pedacinho do Céu também se preocupa com a experiência dos seus clientes. O ambiente é aconchegante e sofisticado, criando uma atmosfera perfeita para reuniões em família, encontros românticos ou jantares de negócios.")
@@ -294,7 +331,7 @@ def mainLogin():
           button(username="fake-username", floating=False, width=221)
 
         if selecionar == "🖨️ Inserir Dados":
-          # logging.info('O cliente selecionou a opção de inserir dados')
+          logging.info('O cliente selecionou a opção de inserir dados')
 
           st.title('Inserção de Dados')
           arquivo00 = st.radio('Escolha o arquivo para inserir os dados', ('Bebidas', 'Estoque', 'Clientes', 'Pratos', 'Categoria de Vendas'))
@@ -315,7 +352,7 @@ def mainLogin():
                       "integridade dos dados e evita erros e inconsistências nos resultados das análises.") 
 
           if arquivo00 == 'Bebidas':
-              # logging.info('O cliente selecionou a opção de inserir bebidas')
+              logging.info('O cliente selecionou a opção de inserir bebidas')
               st.subheader('Inserir Bebida')
               id = st.text_input('id')
               nome = st.text_input('nome')
@@ -330,7 +367,7 @@ def mainLogin():
                   st.button('Voltar')
 
           elif arquivo00 == 'Estoque':
-              # logging.info('O cliente selecionou a opção de inserir estoque')
+              logging.info('O cliente selecionou a opção de inserir estoque')
               st.subheader('Inserir Estoque')
               id = st.text_input('ID')
               nome = st.text_input('NOME')
@@ -341,7 +378,7 @@ def mainLogin():
                 st.button('Voltar')
 
           elif arquivo00 == 'Clientes':
-              # logging.info('O cliente selecionou a opção de inserir clientes')
+              logging.info('O cliente selecionou a opção de inserir clientes')
               st.subheader('Inserir Cliente')
               id = st.text_input('ID')
               nome = st.text_input('NOME')
@@ -352,7 +389,7 @@ def mainLogin():
                   st.button('Voltar')
 
           elif arquivo00 == 'Pratos':
-              # logging.info('O cliente selecionou a opção de inserir pratos')
+              logging.info('O cliente selecionou a opção de inserir pratos')
               st.subheader('Inserir Prato')
               id = st.text_input('ID')
               nome = st.text_input('NOME')
@@ -364,7 +401,7 @@ def mainLogin():
                   st.button('Voltar')
 
           elif arquivo00 == 'Petiscos':
-              # logging.info('O cliente selecionou a opção de inserir petiscos')
+              logging.info('O cliente selecionou a opção de inserir petiscos')
               st.subheader('Inserir Petisco')
               id = st.text_input('ID')
               nome = st.text_input('NOME')
@@ -376,7 +413,7 @@ def mainLogin():
                   st.button('Voltar')
 
           elif arquivo00 == 'Categoria de Vendas':
-              # logging.info('O cliente selecionou a opção de inserir vendas')
+              logging.info('O cliente selecionou a opção de inserir vendas')
               st.subheader('Inserir Venda')
               id = st.text_input('ID')
               categoria = st.text_input('Categoria')
@@ -406,74 +443,74 @@ def mainLogin():
                       "integridade dos dados e evita erros e inconsistências nos resultados das análises.") 
 
           if arquivo01 == 'Bebidas':
-            # bebidas = bebidas_clientes.Bebidas(db_deta_bebidas)
+            bebidas = bebidas_clientes.Bebidas(db_deta_bebidas)
             bebidas.show_table()
             id_to_update = st.number_input("Digite o ID do registro que deseja atualizar:", min_value=1, max_value=len(bebidas.data))
             update_data = None
             if st.button("Atualizar"):
                 update_data = bebidas.update_by_id(id_to_update)
             if update_data and st.button("Confirmar"):
-                # bebidas.db_deta_bebidas.put(update_data)
+                bebidas.db_deta_bebidas.put(update_data)
                 st.success("Dados atualizados com sucesso!")
                 bebidas.load_data()
 
           elif arquivo01 == 'Estoque':
-            # estoque = estoque_update.Estoque(db_deta_estoque)
+            estoque = estoque_update.Estoque(db_deta_estoque)
             estoque.show_table()
             id_to_update = st.number_input("Digite o ID do registro que deseja atualizar:", min_value=1, max_value=len(estoque.data))
             update_data = None
             if st.button("Atualizar"):
                 update_data = estoque.update_by_id(id_to_update)
             if update_data and st.button("Confirmar"):
-                # estoque.db_deta_estoque.put(update_data)
+                estoque.db_deta_estoque.put(update_data)
                 st.success("Dados atualizados com sucesso!")
                 estoque.load_data()
 
           elif arquivo01 == 'Clientes':
-            # clientes = clientes_update.Clientes(db_deta_clientes)
+            clientes = clientes_update.Clientes(db_deta_clientes)
             clientes.show_table()
             id_to_update = st.number_input("Digite o ID do registro que deseja atualizar:", min_value=1, max_value=len(clientes.data))
             update_data = None
             if st.button("Atualizar"):
                 update_data = clientes.update_by_id(id_to_update)
             if update_data and st.button("Confirmar"):
-                # clientes.db_deta_clientes.put(update_data)
+                clientes.db_deta_clientes.put(update_data)
                 st.success("Dados atualizados com sucesso!")
                 clientes.load_data()
 
           elif arquivo01 == 'Pratos':
-            # pratos = pratos_update.Pratos(db_deta_pratos)
+            pratos = pratos_update.Pratos(db_deta_pratos)
             pratos.show_table()
             id_to_update = st.number_input("Digite o ID do registro que deseja atualizar:", min_value=1, max_value=len(pratos.data))
             update_data = None
             if st.button("Atualizar"):
                 update_data = pratos.update_by_id(id_to_update)
             if update_data and st.button("Confirmar"):
-                # pratos.db_deta_pratos.put(update_data)
+                pratos.db_deta_pratos.put(update_data)
                 st.success("Dados atualizados com sucesso!")
                 pratos.load_data()
 
           elif arquivo01 == '🧑🏻‍🦱 Funcionários':
-            # funcionarios = funcionarios_update.Funcionarios(db_deta_funcionarios)
+            funcionarios = funcionarios_update.Funcionarios(db_deta_funcionarios)
             funcionarios.show_table()
             id_to_update = st.number_input("Digite o ID do registro que deseja atualizar:", min_value=1, max_value=len(funcionarios.data))
             update_data = None
             if st.button("Atualizar"):
                 update_data = funcionarios.update_by_id(id_to_update)
             if update_data and st.button("Confirmar"):
-                # funcionarios.db_deta_funcionarios.put(update_data)
+                funcionarios.db_deta_funcionarios.put(update_data)
                 st.success("Dados atualizados com sucesso!")
                 funcionarios.load_data()
 
           elif arquivo01 == 'Categoria de Vendas':
-            # categoriavendas = categoria_vendas_update.CategoriaVendas(db_deta_categoriavendas)
+            categoriavendas = categoria_vendas_update.CategoriaVendas(db_deta_categoriavendas)
             categoriavendas.show_table()
             id_to_update = st.number_input("Digite o ID do registro que deseja atualizar:", min_value=1, max_value=len(categoriavendas.data))
             update_data = None
             if st.button("Atualizar"):
                 update_data = categoriavendas.update_by_id(id_to_update)
             if update_data and st.button("Confirmar"):
-                # categoriavendas.db_deta_categoriavendas.put(update_data)
+                categoriavendas.db_deta_categoriavendas.put(update_data)
                 st.success("Dados atualizados com sucesso!")
                 categoriavendas.load_data()
 
@@ -522,12 +559,12 @@ def mainLogin():
         if selecionar == "📉 Previsão de Demanda":
           # previsaoDemanda.previsao_demanda()
           # def insert_demand_data(data):
-            db_deta_previsao_demanda.put(data)
+          #   db_deta_previsao_demanda.put(data)
 
           # data = {"Data": "2023-05-12", "Hora": "10:00", "Clientes": 50}
           # insert_demand_data(data)
           # st.success("Dados inseridos com sucesso!")
-            previsaoDemanda.previsao_demanda()
+          previsaoDemanda.previsao_demanda()
 
         if selecionar == "📲 Dados Brutos":
 
@@ -542,19 +579,19 @@ def mainLogin():
 
             if st.checkbox("Clique aqui para ver os dados de bebidas",False):
                 st.markdown("###### ESTES SÃO OS DADOS BRUTOS PARA TODAS AS COMPARAÇÕES E GRÁFICO")
-                # st.write(dataDetaBebidas)
+                st.write(dataDetaBebidas)
 
             if st.checkbox("Clique aqui para ver os dados de estoque",False):
                 st.markdown("###### ESTES SÃO OS DADOS BRUTOS PARA TODAS AS COMPARAÇÕES E GRÁFICO")
-                # st.write(dataDetaEstoque)
+                st.write(dataDetaEstoque)
 
             if st.checkbox("Clique aqui para ver os dados de pratos",False):
                 st.markdown("###### ESTES SÃO OS DADOS BRUTOS PARA TODAS AS COMPARAÇÕES E GRÁFICO")
-                # st.write(dataDetaPratos)
+                st.write(dataDetaPratos)
 
             if st.checkbox("Clique aqui para ver os dados de clientes",False):
                 st.markdown("###### ESTES SÃO OS DADOS BRUTOS PARA TODAS AS COMPARAÇÕES E GRÁFICO")
-                # st.write(dataDetaClientes)
+                st.write(dataDetaClientes)
           
           else:
 
@@ -780,83 +817,61 @@ def mainLogin():
 
         if selecionar == "💾 Consultar Dados":
 
-          # select=st.selectbox('Selecione as opções para ver detalhes sobre suas bebidas', ['nome' , 'preco', 'quantidade', 'descricao', 'total_vendas', 'quantidade_vendas'])
+          select=st.selectbox('Selecione as opções para ver detalhes sobre suas bebidas', ['nome' , 'preco', 'quantidade', 'descricao', 'total_vendas', 'quantidade_vendas'])
           if select == 'nome':
-              # st.write(dataDetaBebidas.query("nome >= nome")[["key","nome"]])
-              pass
+              st.write(dataDetaBebidas.query("nome >= nome")[["key","nome"]])
           elif select == 'preco':
-              # st.write(dataDetaBebidas.query("preco >= preco")[["key","preco"]])
-              pass
+              st.write(dataDetaBebidas.query("preco >= preco")[["key","preco"]])
           elif select == 'quantidade':
-              # st.write(dataDetaBebidas.query("quantidade >= quantidade")[["key","quantidade"]])
-              pass
+              st.write(dataDetaBebidas.query("quantidade >= quantidade")[["key","quantidade"]])
           elif select == 'descricao':
-              # st.write(dataDetaBebidas.query("descricao >= descricao")[["key","descricao"]])
-              pass
+              st.write(dataDetaBebidas.query("descricao >= descricao")[["key","descricao"]])
           elif select == 'total_vendas':
-              # st.write(dataDetaBebidas.query("total_vendas >= total_vendas")[["key","total_vendas"]])
-              pass
+              st.write(dataDetaBebidas.query("total_vendas >= total_vendas")[["key","total_vendas"]])
           else:
-              # st.write(dataDetaBebidas.query("quantidade_vendas >= quantidade_vendas")[["key","quantidade_vendas"]])
-              pass
+              st.write(dataDetaBebidas.query("quantidade_vendas >= quantidade_vendas")[["key","quantidade_vendas"]])
 
-          # select = st.selectbox('Selecione as opções para ver detalhes sobre seus estoque', ['NOME' , 'QUANTIDADE'])
+          select = st.selectbox('Selecione as opções para ver detalhes sobre seus estoque', ['NOME' , 'QUANTIDADE'])
           if select == 'NOME':
-              # st.write(dataDetaEstoque.query("NOME >= NOME")[["key","NOME"]])
-              pass
+              st.write(dataDetaEstoque.query("NOME >= NOME")[["key","NOME"]])
           else:
-              # st.write(dataDetaEstoque.query("QUANTIDADE >= QUANTIDADE")[["key","QUANTIDADE"]])
-              pass
+              st.write(dataDetaEstoque.query("QUANTIDADE >= QUANTIDADE")[["key","QUANTIDADE"]])
 
-          # select = st.selectbox('Selecione as opções para ver detalhes sobre seus funcionários', ['NOME' , 'Cargo', 'ESPECIALIDADE', 'SALÁRIODIA', 'DIASTRABALHADOS'])
+          select = st.selectbox('Selecione as opções para ver detalhes sobre seus funcionários', ['NOME' , 'Cargo', 'ESPECIALIDADE', 'SALÁRIODIA', 'DIASTRABALHADOS'])
           if select == 'NOME':
-              # st.write(dataDetaFuncionarios.query("NOME >= NOME")[["key","NOME"]])
-              pass
+              st.write(dataDetaFuncionarios.query("NOME >= NOME")[["key","NOME"]])
           elif select == 'Cargo':
-              # st.write(dataDetaFuncionarios.query("Cargo >= Cargo")[["key","Cargo"]])
-              pass
+              st.write(dataDetaFuncionarios.query("Cargo >= Cargo")[["key","Cargo"]])
           elif select == 'ESPECIALIDADE':
-              # st.write(dataDetaFuncionarios.query("ESPECIALIDADE >= ESPECIALIDADE")[["key","ESPECIALIDADE"]])
-              pass
+              st.write(dataDetaFuncionarios.query("ESPECIALIDADE >= ESPECIALIDADE")[["key","ESPECIALIDADE"]])
           elif select == 'DIASTRABALHADOS':
-              # st.write(dataDetaFuncionarios.query("DIASTRABALHADOS >= DIASTRABALHADOS")[["key","DIASTRABALHADOS"]])
-              pass
+              st.write(dataDetaFuncionarios.query("DIASTRABALHADOS >= DIASTRABALHADOS")[["key","DIASTRABALHADOS"]])
           else :
-              # st.write(dataDetaFuncionarios.query("SALÁRIODIA >= SALÁRIODIA")[["key","SALÁRIODIA"]])
-              pass
+              st.write(dataDetaFuncionarios.query("SALÁRIODIA >= SALÁRIODIA")[["key","SALÁRIODIA"]])
 
-          # select = st.selectbox('Selecione as opções para ver detalhes sobre seus pratos', ['NOME' , 'PRECO', 'ACOMPANHAMENTO'])
+          select = st.selectbox('Selecione as opções para ver detalhes sobre seus pratos', ['NOME' , 'PRECO', 'ACOMPANHAMENTO'])
           if select == 'NOME':
-              # st.write(dataDetaPratos.query("NOME >= NOME")[["key","NOME"]])
-              pass
+              st.write(dataDetaPratos.query("NOME >= NOME")[["key","NOME"]])
           elif select == 'PRECO':
-              # st.write(dataDetaPratos.query("PRECO >= PRECO")[["key","PRECO"]])
-              pass
+              st.write(dataDetaPratos.query("PRECO >= PRECO")[["key","PRECO"]])
           else :
-              # st.write(dataDetaPratos.query("ACOMPANHAMENTO >= ACOMPANHAMENTO")[["key","ACOMPANHAMENTO"]])
-              pass
+              st.write(dataDetaPratos.query("ACOMPANHAMENTO >= ACOMPANHAMENTO")[["key","ACOMPANHAMENTO"]])
 
-          # select = st.selectbox('Selecione as opções para ver detalhes sobre suas reservas', ['NOME' , 'DATA', 'QTDRESERVAS'])
+          select = st.selectbox('Selecione as opções para ver detalhes sobre suas reservas', ['NOME' , 'DATA', 'QTDRESERVAS'])
           if select == 'NOME':
-              # st.write(dataDetaReservas.query("NOME >= NOME")[["key","NOME"]])
-              pass
+              st.write(dataDetaReservas.query("NOME >= NOME")[["key","NOME"]])
           elif select == 'DATA':
-              # st.write(dataDetaReservas.query("DATA >= DATA")[["key","DATA"]])
-              pass
+              st.write(dataDetaReservas.query("DATA >= DATA")[["key","DATA"]])
           elif select == 'QTDRESERVAS':
-              # st.write(dataDetaReservas.query("QTDRESERVAS >= QTDRESERVAS")[["key","QTDRESERVAS"]])
-              pass
+              st.write(dataDetaReservas.query("QTDRESERVAS >= QTDRESERVAS")[["key","QTDRESERVAS"]])
 
-          # select = st.selectbox('Selecione as opções para ver detalhes sobre suas vendas por categoria', ['ID', 'Categoria' , 'Vendas', 'PrecoMedio'])
+          select = st.selectbox('Selecione as opções para ver detalhes sobre suas vendas por categoria', ['ID', 'Categoria' , 'Vendas', 'PrecoMedio'])
           if select == 'Categoria':
-              # st.write(dataDetaCategoriaVendas.query("Categoria >= Categoria")[["key","Categoria"]])
-              pass
+              st.write(dataDetaCategoriaVendas.query("Categoria >= Categoria")[["key","Categoria"]])
           elif select == 'Vendas':
-              # st.write(dataDetaCategoriaVendas.query("Vendas >= Vendas")[["key","Vendas"]])
-              pass
+              st.write(dataDetaCategoriaVendas.query("Vendas >= Vendas")[["key","Vendas"]])
           else :
-              # st.write(dataDetaCategoriaVendas.query("PrecoMedio >= PrecoMedio")[["key","PrecoMedio"]])
-              pass
+              st.write(dataDetaCategoriaVendas.query("PrecoMedio >= PrecoMedio")[["key","PrecoMedio"]])
 
         if selecionar == "🗓️ Cardápio":
           st.title("Cardápio")
@@ -1034,34 +1049,33 @@ def mainLogin():
               st.markdown("### CLASSIFICAÇÃO DE BEBIDAS ★★★★★")
               
               # Fetch all items from the database
-              # items = fetch_all_items_db(db_deta_bebidas)
+              items = fetch_all_items_db(db_deta_bebidas)
 
               if items:
                 # Create a DataFrame with the data
-                pass
-                # dataDetaBebidas = pd.DataFrame(items)
-                # if "nome" in dataDetaBebidas.columns:
-                st.success("Data found in the 'bebidas' database.")
+                dataDetaBebidas = pd.DataFrame(items)
+                if "nome" in dataDetaBebidas.columns:
+                  st.success("Data found in the 'bebidas' database.")
                   # Aggregate data by 'nome' column
-                  # data_agg = dataDetaBebidas.groupby("nome").agg({"total_vendas":"sum"}).reset_index()
+                  data_agg = dataDetaBebidas.groupby("nome").agg({"total_vendas":"sum"}).reset_index()
 
                   # Create the pie chart
-                chart = alt.Chart(data_agg).mark_arc(innerRadius=50).encode(
-                    theta=alt.Theta('total_vendas:Q', stack=True),
-                    color=alt.Color("nome:N"),
-                    tooltip=["nome:N", "total_vendas:Q"]
-                ).properties(
-                    width=400,
-                    height=400
-                ).project(
-                    type='pie'
-                )
-                st.altair_chart(chart)
-              else:
-                st.error("Coluna 'nome' não existe.")
+                  chart = alt.Chart(data_agg).mark_arc(innerRadius=50).encode(
+                      theta=alt.Theta('total_vendas:Q', stack=True),
+                      color=alt.Color("nome:N"),
+                      tooltip=["nome:N", "total_vendas:Q"]
+                  ).properties(
+                      width=400,
+                      height=400
+                  ).project(
+                      type='pie'
+                  )
+                  st.altair_chart(chart)
+                else:
+                  st.error("Coluna 'nome' não existe.")
                 
-              # else:
-              #   st.warning("No data found in the 'bebidas' database.")
+              else:
+                st.warning("No data found in the 'bebidas' database.")
             plot_pie_chart()
           else:
             pass
@@ -1072,6 +1086,6 @@ def mainLogin():
     elif authenticate_user == None:
         st.warning('Please enter your username and password')
     
-    # session_start_time = st.session_state.get('session_start_time', time.time())
+    session_start_time = st.session_state.get('session_start_time', time.time())
 
-    # elapsed_time = time.time() - session_start_time
+    elapsed_time = time.time() - session_start_time
